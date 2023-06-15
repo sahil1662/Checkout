@@ -1,0 +1,37 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="checkout-billing-address">
+    <div class="opc-block-shipping-information">
+        <div class="shipping-information-title">
+            <span data-bind="i18n: 'Billing Address:'">Billing Address:</span>
+            <button class="action action-edit" data-bind="click: backToShippingMethod">
+                <span data-bind="i18n: 'edit'"></span>
+            </button>
+        </div>
+    </div>
+    <!-- <div class="billing-address-same-as-shipping-block field choice" data-bind="visible: canUseShippingAddress()">
+        <input type="checkbox" name="billing-address-same-as-shipping"
+               data-bind="checked: isAddressSameAsShipping, click: useShippingAddress, attr: {id: 'billing-address-same-as-shipping-' + getCode($parent)}"/>
+        <label data-bind="attr: {for: 'billing-address-same-as-shipping-' + getCode($parent)}"><span
+                data-bind="i18n: 'My billing and shipping address are the same'"></span></label>
+    </div> -->
+    <render args="detailsTemplate"></render>
+    <!--
+    /**
+    * Add Billing form components which were missing in guest checkout incase of a virtual/giftcard product
+    * @link https://pixelmechanics.atlassian.net/browse/DETS-157
+    * PM AY Nov 9 2022
+    */
+    -->
+    <fieldset class="fieldset" data-bind="visible: !isAddressSameAsShipping() && !isAddressDetailsVisible()">
+        <each args="getRegion('billing-address-list')" render="" ></each>
+        <div data-bind="fadeVisible: isAddressFormVisible">
+            <render args="formTemplate"></render>
+        </div>
+        <render args="actionsTemplate"></render>
+    </fieldset>
+</div>

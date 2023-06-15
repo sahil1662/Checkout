@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--/**
+ * Section configuration file to auto update the mini cart after ajax is triggered to update the qty
+ * PM KL, @link https://projects.zoho.com/portal/pixelmechanics2#taskdetail/1781812000000140023/1781812000000179041/1781812000000501041
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Customer:etc/sections.xsd">
+    <action name="pmcheckout/ajax/cartUpdate">
+        <section name="cart"/>
+    </action>
+</config>

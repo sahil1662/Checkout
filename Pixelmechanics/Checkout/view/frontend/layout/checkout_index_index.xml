@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Pixelmechanics_Checkout::css/checkout.css"/>
+    </head>
+    <body>
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="shipping-step" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="shippingAddress" xsi:type="array">
+                                                    <item name="config" xsi:type="array">
+                                                        <item name="popUpForm" xsi:type="array">
+                                                            <item name="options" xsi:type="array">
+                                                                <item name="title" xsi:type="string" translate="true">Create new delivery address</item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="shipping-address-fieldset" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="care_of" xsi:type="array">
+                                                                    <item name="visible" xsi:type="boolean">false</item>
+                                                                </item>
+																<item name="postcode" xsi:type="array">
+                                                                        <item name="sortOrder" xsi:type="string">71</item>
+                                                                        <item name="component" xsi:type="string">Magento_Ui/js/form/element/post-code</item>
+                                                                        <item name="validation" xsi:type="array">
+                                                                        <item name="required-entry" xsi:type="string">true</item>
+                                                                        <item name="validate-zip-rules" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                </item>
+                                                                <item name="company" xsi:type="array">
+                                                                    <item name="sortOrder" xsi:type="string">61</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                        <item name="billing-step" xsi:type="array">
+                                            <item name="component" xsi:type="string">uiComponent</item>
+                                            <item name="children" xsi:type="array">
+                                                <item name="payment" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="afterMethods" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="giftCardAccount" xsi:type="array">
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="componentDisabled"
+                                                                            xsi:type="boolean">true
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                                <item name="shipping-information" xsi:type="array">
+                                                    <item name="component" xsi:type="string">Magento_Checkout/js/view/shipping-information</item>
+                                                    <item name="config" xsi:type="array">
+                                                        <item name="sortOrder" xsi:type="string">21</item>
+                                                        <item name="deps" xsi:type="string">checkout.steps.shipping-step.shippingAddress</item>
+                                                    </item>
+                                                    <item name="displayArea" xsi:type="string">shipping-information</item>
+                                                        <item name="children" xsi:type="array">
+                                                            <item name="ship-to" xsi:type="array">
+                                                                <item name="sortOrder" xsi:type="string">22</item>
+                                                                <item name="component" xsi:type="string">Magento_Checkout/js/view/shipping-information/list</item>
+                                                                <item name="displayArea" xsi:type="string">ship-to</item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                    <!-- <item name="comment" xsi:type="array">
+                                                        <item name="component" xsi:type="string">Ulmod_OrderComment/js/view/checkout/order-comment-block</item>
+                                                    </item> -->
+                                                    <item name="agreements" xsi:type="array">
+                                                        <item name="component" xsi:type="string">Magento_CheckoutAgreements/js/view/checkout-agreements</item>
+                                                        <item name="displayArea" xsi:type="string">before-place-order</item>
+                                                        <item name="dataScope" xsi:type="string">checkoutAgreements</item>
+                                                        <item name="provider" xsi:type="string">checkoutProvider</item>
+                                                    </item>
+                                                    <item name="agreements-validator" xsi:type="array">
+                                                        <item name="component" xsi:type="string">Magento_CheckoutAgreements/js/view/agreement-validation</item>
+                                                    </item>
+                                                </item>
+                                                <item name="additional-payment-validators" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="agreements-validator" xsi:type="array">
+                                                            <item name="component" xsi:type="string">Magento_CheckoutAgreements/js/view/agreement-validation</item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                    <item name="sidebar" xsi:type="array">
+                                        <item name="sortOrder" xsi:type="string">50</item>
+                                        <item name="component" xsi:type="string">Magento_Checkout/js/view/sidebar</item>
+                                        <item name="displayArea" xsi:type="string">sidebar</item>
+                                        <item name="config" xsi:type="array">
+                                            <item name="template" xsi:type="string">Magento_Checkout/sidebar</item>
+                                            <item name="deps" xsi:type="array">
+                                                <item name="0" xsi:type="string">checkout.steps</item>
+                                            </item>
+                                        </item>
+                                        <item name="children" xsi:type="array">
+                                            <item name="summary" xsi:type="array">
+                                                <item name="component" xsi:type="string">Magento_Checkout/js/view/summary</item>
+                                                <item name="displayArea" xsi:type="string">summary</item>
+                                                <item name="config" xsi:type="array">
+                                                    <item name="template" xsi:type="string">Pixelmechanics_Checkout/summary</item>
+                                                </item>
+                                                <item name="children" xsi:type="array">
+                                                    <item name="cart_items" xsi:type="array">
+                                                        <item name="sortOrder" xsi:type="string">11</item>
+                                                        <item name="component" xsi:type="string">Magento_Checkout/js/view/summary/cart-items</item>
+                                                    </item>
+                                                    <item name="totals" xsi:type="array">
+                                                        <item name="sortOrder" xsi:type="string">12</item>
+                                                        <item name="component" xsi:type="string">Magento_Checkout/js/view/summary/totals</item>
+                                                        <item name="displayArea" xsi:type="string">totals</item>
+                                                    </item>
+                                                    <item name="itemsBefore" xsi:type="array">
+                                                        <item name="component" xsi:type="string">uiComponent</item>
+                                                        <item name="children" xsi:type="array">
+                                                            <!-- merge your components here -->
+                                                        </item>
+                                                    </item>
+
+                                                    <item name="itemsAfter" xsi:type="array">
+                                                        <item name="component" xsi:type="string">uiComponent</item>
+                                                        <item name="children" xsi:type="array">
+                                                            <!-- merge your components here -->
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                            <item name="shipping-information" xsi:type="array">
+                                                <item name="config" xsi:type="array">
+                                                    <item name="componentDisabled" xsi:type="boolean">true</item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="checkout.root" template="Pixelmechanics_Checkout::onepage.phtml"/>
+    </body>
+</page>

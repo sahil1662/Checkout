@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--
+        @author: KL
+        @link:https://projects.zoho.com/portal/pixelmechanics2#taskdetail/1781812000000140023/1781812000000179041/1781812000000501041
+        @description: to get the dynamic value of Tax from the admin using data helper to display on the checkout inkl. MwSt OR zzgl. Mswt
+    -->
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="custom_config_provider" xsi:type="object">Pixelmechanics\Checkout\Model\CustomConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,14 @@
+<div class="opc-block-summary" data-bind="blockLoader: isLoading">
+    <span data-bind="i18n: 'Order Summary'" class="title"></span>
+    <!-- ko foreach: elems() -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+</div>
+<!-- ko if: (isVisible()) -->
+<div class="actions-toolbar-trigger" id="place-order-trigger-wrapper">
+    <p class="required-field">* Die Bestellung kann nicht abgeschickt werden, da Pflichtfelder nicht ausgefüllt wurden. Bitte überprüfen Sie Ihre Angaben weiter oben.</p>
+    <button type="button" class="button action primary" id="place-order-trigger" value="Place Order" >
+        <!-- ko i18n: 'Place Order' --><!-- /ko -->
+    </button>
+</div>
+<!-- /ko -->

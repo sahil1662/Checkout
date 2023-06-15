@@ -1,0 +1,115 @@
+<?php
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/**  @var $block \Magento\Checkout\Block\Cart\Grid */
+?>
+<?php $pmHelper = $this->helper('Pixelmechanics\Template\Helper\Data');?>
+<?php $mergedCells = ($this->helper(Magento\Tax\Helper\Data::class)->displayCartBothPrices() ? 2 : 1); ?>
+<?= $block->getChildHtml('form_before') ?>
+<form action="<?= $block->escapeUrl($block->getUrl('checkout/cart/updatePost')) ?>"
+          method="post"
+          id="form-validate"
+          data-mage-init='{"Magento_Checkout/js/action/update-shopping-cart":
+              {"validationURL" : "<?= $block->escapeUrl($block->getUrl('checkout/cart/updateItemQty')) ?>",
+              "updateCartActionContainer": "#update_cart_action_container"}
+          }'
+          class="form form-cart">
+    <?= $block->getBlockHtml('formkey') ?>
+    <div class="cart table-wrapper<?= $mergedCells == 2 ? ' detailed' : '' ?>">
+        <?php if ($block->getPagerHtml()):?>
+            <div class="cart-products-toolbar cart-products-toolbar-top toolbar"
+                 data-attribute="cart-products-toolbar-top"><?= $block->getPagerHtml() ?>
+            </div>
+        <?php endif ?>
+        <table id="shopping-cart-table"
+               class="cart items data table"
+               data-mage-init='{"shoppingCart":{"emptyCartButton": ".action.clear",
+               "updateCartActionContainer": "#update_cart_action_container"}}'>
+            <caption class="table-caption"><?= $block->escapeHtml(__('Shopping Cart Items')) ?></caption>
+            <thead>
+                <tr>
+                    <th class="col item" scope="col"><span><?= $block->escapeHtml(__('Item')) ?></span></th>
+                    <th class="col price" scope="col"><span><?= $block->escapeHtml(__('Price')) ?></span>
+                            <?php //get vat info text and display it
+                            echo $pmHelper->getVatInfoPriceText();?>
+                    </th>
+                    <th class="col qty" scope="col"><span><?= $block->escapeHtml(__('Qty')) ?></span></th>
+                    <th class="col subtotal" scope="col"><span><?= $block->escapeHtml(__('Subtotal')) ?></span>
+                            <?php //get vat info text and display it
+                            echo $pmHelper->getVatInfoSubtotalText();?>
+                    </th>
+                </tr>
+            </thead>
+            <?php foreach ($block->getItems() as $_item):?>
+                <?= $block->getItemHtml($_item) ?>
+            <?php endforeach ?>
+        </table>
+        <?php if ($block->getPagerHtml()):?>
+            <div class="cart-products-toolbar cart-products-toolbar-bottom toolbar"
+                 data-attribute="cart-products-toolbar-bottom"><?= $block->getPagerHtml() ?>
+            </div>
+        <?php endif ?>
+    </div>
+</form>
+<?= $block->getChildHtml('checkout.cart.order.actions') ?>
+<?= $block->getChildHtml('shopping.cart.table.after') ?>
+<?// Load the JS component to trigger the ajax qty update on the cart page clicking on the refresh icon?>
+<script type="text/javascript">
+    require(['jquery','Magento_Checkout/js/action/get-totals',
+    'Magento_Customer/js/customer-data',
+    'mage/mage'
+    ], function ($, getTotalsAction, customerData) {
+    'use strict';
+    $(document).ready(function(){
+        // This code will work if you want to update the qty from the qty input box direct. At the moment we don't need it.
+        // $(document).on(
+        //     'input',
+        //     'input[name$="[qty]"]',
+        //     function(){
+        //         reloadCart();
+        // });
+        $(document).on(
+            'click',
+            '.form-cart .cart .qty-update',
+            function(){
+                reloadCart();
+                return false;
+            }
+        );
+    });
+
+    function reloadCart() {
+        var form = $('form#form-validate');
+        $.ajax({
+            url: form.attr('action'),
+            data: form.serialize(),
+            showLoader: true,
+            success: function (res) {
+                var parsedResponse = $.parseHTML(res);
+                var result = $(parsedResponse).find("#form-validate");
+                var sections = ['cart'];
+                $("#form-validate").replaceWith(result);
+
+                // The mini cart reloading
+                customerData.reload(sections, true);
+
+                // The totals summary block reloading
+                var deferred = $.Deferred();
+                getTotalsAction([], deferred);
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                console.log(err.Message);
+            }
+        });
+    }
+    });
+</script>
+<script type="text/javascript">
+// this code is to update qty increment and decrement using ajax
+require(['jquery', 'pmcustom'], function($, qtyUpdate) {
+     qtyUpdate();
+    });
+</script>
+
